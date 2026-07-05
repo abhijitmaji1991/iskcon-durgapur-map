@@ -1,0 +1,303 @@
+:root {
+  /* Brand colors (Saffron/Gold theme for ISKCON) */
+  --accent-primary: hsl(35, 95%, 52%);
+  --accent-primary-hover: hsl(35, 95%, 45%);
+  --accent-primary-rgb: 249, 143, 16;
+  
+  /* Category Colors */
+  --color-temple: hsl(15, 90%, 55%);
+  --color-namahatta: hsl(200, 85%, 50%);
+  --color-bhakta: hsl(280, 80%, 60%);
+  --color-event: hsl(340, 85%, 55%);
+  
+  /* Font Families */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', system-ui, -apple-system, sans-serif;
+  
+  /* Light mode tokens */
+  --bg-app: #f4f5f8;
+  --bg-panel: rgba(255, 255, 255, 0.85);
+  --bg-panel-solid: #ffffff;
+  --bg-item-hover: rgba(0, 0, 0, 0.04);
+  --border-panel: rgba(0, 0, 0, 0.08);
+  --border-panel-hover: rgba(0, 0, 0, 0.16);
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --shadow-premium: 0 8px 32px 0 rgba(31, 38, 135, 0.08), 
+                    0 4px 8px 0 rgba(0, 0, 0, 0.04);
+  --blur-panel: 12px;
+  
+  font-family: var(--font-sans);
+  color-scheme: light dark;
+}
+
+/* Dark mode class overrides */
+:root[class="dark"] {
+  --bg-app: #0f1115;
+  --bg-panel: rgba(18, 22, 28, 0.82);
+  --bg-panel-solid: #151921;
+  --bg-item-hover: rgba(255, 255, 255, 0.05);
+  --border-panel: rgba(255, 255, 255, 0.06);
+  --border-panel-hover: rgba(255, 255, 255, 0.12);
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.37),
+                    0 4px 12px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode user system preferences */
+@media (prefers-color-scheme: dark) {
+  :root:not([class="light"]) {
+    --bg-app: #0f1115;
+    --bg-panel: rgba(18, 22, 28, 0.82);
+    --bg-panel-solid: #151921;
+    --bg-item-hover: rgba(255, 255, 255, 0.05);
+    --border-panel: rgba(255, 255, 255, 0.06);
+    --border-panel-hover: rgba(255, 255, 255, 0.12);
+    --text-primary: #f3f4f6;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.37),
+                      0 4px 12px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+body, html, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  border-inline: none; /* override boilerplate */
+  max-width: 100%;
+  text-align: left;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-panel);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Leaflet Overrides & Custom Map Styling */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-sans) !important;
+  background-color: var(--bg-app) !important;
+}
+
+/* Dark tile filtering for class-based dark mode */
+:root[class="dark"] .leaflet-tile-container {
+  filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(1.2);
+}
+
+/* Dark tile filtering for prefers-color-scheme dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:not([class="light"]) .leaflet-tile-container {
+    filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(1.2);
+  }
+}
+
+/* Customize Leaflet Controls */
+.leaflet-control-zoom {
+  border: none !important;
+  box-shadow: var(--shadow-premium) !important;
+  margin-right: 20px !important;
+}
+.leaflet-control-zoom a {
+  background-color: var(--bg-panel-solid) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-panel) !important;
+}
+.leaflet-control-zoom a:hover {
+  background-color: var(--bg-item-hover) !important;
+  color: var(--accent-primary) !important;
+}
+.leaflet-control-attribution {
+  background: var(--bg-panel) !important;
+  color: var(--text-secondary) !important;
+  backdrop-filter: blur(var(--blur-panel));
+  border-top-left-radius: 8px;
+  border-left: 1px solid var(--border-panel);
+  border-top: 1px solid var(--border-panel);
+  font-size: 10px !important;
+}
+
+/* Custom Marker Styling */
+.custom-div-icon {
+  background: none;
+  border: none;
+}
+
+.marker-pin-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.marker-pin {
+  width: 42px;
+  height: 42px;
+  border-radius: 50% 50% 50% 0;
+  background: var(--marker-color, var(--accent-primary));
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin-left: -21px;
+  margin-top: -38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  border: 2px solid #ffffff;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.marker-pin::after {
+  content: '';
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--bg-panel-solid);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.marker-icon-inner {
+  position: absolute;
+  z-index: 10;
+  top: -27px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--marker-color, var(--accent-primary));
+}
+
+.marker-pin-wrapper:hover .marker-pin {
+  transform: rotate(-45deg) scale(1.15);
+}
+
+/* Pulse animation for live coordinate markers */
+.pulse-marker {
+  width: 24px;
+  height: 24px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  position: relative;
+}
+.pulse-marker::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border: 3px solid var(--accent-primary);
+  border-radius: 50%;
+  animation: pulse 1.8s infinite ease-in-out;
+  opacity: 0;
+}
+@keyframes pulse {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Glassmorphism Panel styles */
+.glass-panel {
+  background: var(--bg-panel);
+  backdrop-filter: blur(var(--blur-panel));
+  -webkit-backdrop-filter: blur(var(--blur-panel));
+  border: 1px solid var(--border-panel);
+  border-radius: 16px;
+  box-shadow: var(--shadow-premium);
+}
+
+.glass-panel:hover {
+  border-color: var(--border-panel-hover);
+}
+
+/* Micro-animations */
+.clickable {
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.clickable:active {
+  transform: scale(0.97);
+}
+
+/* Responsive sidebar layout */
+.app-layout {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.sidebar-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  bottom: 20px;
+  width: 380px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-width: calc(100% - 40px);
+}
+
+@media (max-width: 640px) {
+  .sidebar-container {
+    top: auto;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
+    height: 50%;
+    max-width: none;
+  }
+}
+
+.map-container-wrapper {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
